@@ -1,0 +1,16 @@
+version: "2"
+
+networks:
+  network-name:
+    external: true
+
+services:
+  app:
+    build: ./
+    image: arvan-test-project-image
+    container_name: arvan-test-project-run
+    env_file: ./.env.production
+    ports:
+      - "3000:3000"
+    networks:
+      - network-name
