@@ -43,9 +43,9 @@ function InputWrapper({
         {value === "" && (
           <label
             className={`absolute right-2 top-[.5rem] cursor-text break-all pl-2 pr-4 text-[#a69d9d] ${
-              isActive && "!text-gray-400"
+              isActive && "!cursor-not-allowed !text-gray-400"
             }`}
-            htmlFor={inputId + ""}
+            htmlFor={!isActive ? inputId + "" : ""}
             onMouseOver={onHovered}
             onMouseOut={onHoveredCancelled}
           >
@@ -55,7 +55,7 @@ function InputWrapper({
         <a
           className={`absolute left-2 mr-2 mt-[.2rem] h-9 w-9 cursor-pointer p-2 text-[#a69d9d] opacity-100 ${
             showError && "text-gray-700"
-          } ${!typing && !isRadioButton && "!cursor-text !opacity-0"}`}
+          } ${!typing && !isRadioButton && "!cursor-text !opacity-0"} ${isActive && "!cursor-not-allowed"}`}
           onClick={iconClicked}
           onFocus={onFocus}
           onBlur={onFocusCancelled}
