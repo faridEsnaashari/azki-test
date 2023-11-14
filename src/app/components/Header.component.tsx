@@ -8,7 +8,7 @@ function Header() {
     <div className="w-full">
       <div className="flex w-full justify-between">
         <Image className="w-4" src={LogoIcon} alt="logo icon" />
-        <h3 className="hidden text-2xl xsm:block">{fixHeaderText}</h3>
+        <h3 className="hidden text-xl font-medium xsm:block">{fixHeaderText}</h3>
         <ProfileAction />
       </div>
     </div>
