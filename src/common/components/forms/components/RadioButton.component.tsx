@@ -5,6 +5,7 @@ import InputWrapper from "./InputWrapper.component";
 import { RadioButtonProps } from "./radio-button.types";
 import { getRandomId } from "@/tools/helpers.helper";
 import { RadioCircle } from "../../svg-icons";
+import { WithClassName } from "@/common/types/with-class-name.type";
 
 function RadioButton({
   className,
@@ -19,7 +20,7 @@ function RadioButton({
   isActive,
   name,
   options,
-}: RadioButtonProps) {
+}: WithClassName<RadioButtonProps>) {
   const inputRef = useRef<HTMLInputElement>(null!);
 
   const [openOptions, setOpenOptions] = useState(false);
@@ -29,15 +30,19 @@ function RadioButton({
   useEffect(() => setInputId(getRandomId() + ""), []);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = (e.target as HTMLInputElement).value;
-    onValueChange(value);
+    const id = (e.target as HTMLInputElement).value;
+    onValueChange(options.find((option) => option.id === +id)!);
     setOpenOptions(false);
   };
   const onFocusCancelled = () => !hovered && setOpenOptions(false);
   const onHovered = () => setHovered(true);
   const onHoveredCancelled = () => setHovered(false);
-  const onClick = () => setOpenOptions(true);
+  const onClick = () => !isActive && setOpenOptions(true);
   const onIconClick = () => {
+    if (isActive) {
+      return;
+    }
+
     setOpenOptions(true);
     inputRef.current.focus();
   };
@@ -53,7 +58,7 @@ function RadioButton({
       counter={counter}
       description={description}
       label={label}
-      value={value}
+      value={value?.text || ""}
       hovered={hovered}
       className={className}
       placeholder={placeholder}
@@ -66,11 +71,11 @@ function RadioButton({
       <input
         className={`absolute h-10 w-full rounded border border-solid border-[#dfdfdf] bg-white !pl-8 pr-4 transition-colors hover:border-[#a69d9d] ${
           showError && "!border-2 !border-red-600"
-        } ${isActive && "!border !border-green-900 !text-gray-400"}`}
+        } ${isActive && "cursor-not-allowed !border bg-[#f0eded] !text-gray-400"}`}
         ref={inputRef}
         id={inputId}
         type="text"
-        value={value}
+        value={value?.text || ""}
         onBlur={onFocusCancelled}
         onMouseOver={onHovered}
         onMouseOut={onHoveredCancelled}
@@ -88,18 +93,18 @@ function RadioButton({
             <input
               className="hidden"
               key={index}
-              id={index + ""}
+              id={name + index + ""}
               type="radio"
               name={name}
-              value={option}
+              value={option.id}
               onChange={onChange}
-              checked={value === option}
+              checked={value?.id === option.id}
             ></input>
             <label
               className="flex h-10 w-full justify-between bg-white p-3 text-[#807878] hover:bg-[#f7f7f7] hover:text-[#9d9a9a]"
-              htmlFor={index + ""}
+              htmlFor={name + index + ""}
             >
-              <span>{option}</span>
+              <span>{option.text}</span>
               <RadioCircle className={value === option ? "fill-[#807878]" : ""} />
             </label>
           </>
