@@ -12,7 +12,7 @@
     "dev:lint": "rm -rf .next && nodemon --exec 'npm run lint && npm run dev:next || exit 1'",
     "dev:soft-type-check": "rm -rf .next && nodemon --exec 'npm run type-check ; npm run lint  && npm run dev:next || exit 1'",
     "dev:soft-lint": "rm -rf .next && nodemon --exec 'npm run lint ; npm run type-check && npm run dev:next || exit 1'",
-    "dev:next": "next dev",
+    "dev:next": "rm -rf .next && next dev",
     "type-check": "tsc --noEmit --incremental",
     "lint": "next lint",
     "lint:format": "npm run format && next lint"
