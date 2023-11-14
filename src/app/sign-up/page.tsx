@@ -43,7 +43,9 @@ function Page() {
           onCorrect={(value) => isValidName(value)}
           placeholder={passwordPlaceholder}
         />
-        <Button className="rounded-full bg-[#25b79b] px-10 py-3 text-base font-medium text-white">{titleText}</Button>
+        <Button className="flex w-28 justify-center rounded-full bg-[#25b79b] py-2 text-base font-medium text-white">
+          {titleText}
+        </Button>
       </form>
     </div>
   );
