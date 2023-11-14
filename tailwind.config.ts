@@ -6,13 +6,14 @@ export default {
     extend: {
       screens: {
         xsm: "480px",
+        "2xsm": "345px",
       },
       fontFamily: {
         bnazanin: ["var(--font-b-nazanin)"],
       },
       transitionProperty: {
         "max-h": "max-height",
-        color: "color",
+        color: "color, background-color",
       },
       colors: {
         aside: {
