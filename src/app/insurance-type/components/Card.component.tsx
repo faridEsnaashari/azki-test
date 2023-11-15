@@ -8,9 +8,9 @@ function Card({ className, children, onClick, disable }: WithClassName<CardProps
   return (
     <div
       className={`${className} ${
-        disable && "!bg-[#fafafa] !text-[#d5d5d5]"
+        disable && "!cursor-not-allowed !bg-[#fafafa] !text-[#d5d5d5]"
       } flex cursor-pointer flex-col items-center justify-between rounded-3xl border border-solid border-[#e6e6e6] p-4 text-black`}
-      onClick={onClick}
+      onClick={!disable ? onClick : () => {}}
     >
       <Image className="w-2/3" src={disable ? CardDisableImage : CardImage} alt="card image" />
       <span className="font-bold">{children}</span>
