@@ -1,27 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Button, RadioButton } from "@/common/components/forms";
-import {
-  carModelPlaceholder,
-  carTypePlaceholder,
-  descriptionText,
-  nextButtonText,
-  returnButtonText,
-  titleText,
-} from "./texts";
+import { carModelPlaceholder, carTypePlaceholder, errorText, nextButtonText, returnButtonText } from "./texts";
 import { Option } from "@/common/components/forms/components/radio-button.types";
 import { ArrowIcon } from "@/common/components/svg-icons";
 import useAPICaller from "@/hooks/use-api-caller.hook";
 import { VehicleType, VehicleUsage } from "@/common/types/entities.type";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function Page() {
   const [getVehicleTypes, result] = useAPICaller().getVehicleTypesCaller;
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [carTypes, setCarTypes] = useState<VehicleType[]>([]);
   const [selectedCarType, setSelectedCarType] = useState<Option>();
   const [carUsages, setCarUsages] = useState<VehicleUsage[]>();
   const [selectedCarUsage, setSelectedCarUsage] = useState<Option>();
+  const [showError, setShowError] = useState<"cartype" | "carusage">();
 
   useEffect(() => getVehicleTypes(), []);
   useEffect(() => {
@@ -40,8 +38,31 @@ function Page() {
     setSelectedCarUsage(undefined);
   };
 
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!selectedCarType) {
+      setShowError("cartype");
+      return;
+    }
+
+    if (!selectedCarUsage) {
+      setShowError("carusage");
+      return;
+    }
+
+      localStorage.setItem("vehicleType", selectedCarType.id+"")
+      localStorage.setItem("vehicleUsage", selectedCarUsage.id+"")
+
+    const urlParams = new URLSearchParams(searchParams.toString());
+    urlParams.append("vehicle-type", selectedCarType.id + "");
+    urlParams.append("vehicle-usage", selectedCarUsage.id + "");
+
+    router.push("insurance-company?" + urlParams);
+  };
+
   return (
-    <form className="flex w-full flex-col flex-wrap items-center xsm:flex-row xsm:justify-end">
+    <form className="flex w-full flex-col flex-wrap xsm:flex-row xsm:justify-end" onSubmit={onSubmit}>
       <RadioButton
         className="ml-0 w-full pb-4 xsm:ml-[4%] xsm:w-[48%]"
         options={carTypes.map((carType) => ({ id: carType.id, text: carType.title }))}
@@ -49,6 +70,8 @@ function Page() {
         onValueChange={onCarTypeSelected}
         placeholder={carTypePlaceholder}
         name="cartype"
+        errorText={errorText}
+        showError={showError === "cartype"}
       />
       <RadioButton
         className="w-full pb-4 xsm:w-[48%]"
@@ -58,6 +81,8 @@ function Page() {
         placeholder={carModelPlaceholder}
         name="carusage"
         isActive={!!!selectedCarType}
+        errorText={errorText}
+        showError={showError === "carusage"}
       />
       <div className="flex w-full justify-between gap-4">
         <Button className="relative flex h-10 w-40 min-w-[2rem] items-center rounded-full border border-solid border-[#44c1a9] bg-white text-base font-medium text-[#44c1a9] transition-color hover:bg-[#25b79b] hover:text-white">
