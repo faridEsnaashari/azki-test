@@ -11,6 +11,11 @@ import {
   getInsuranceCompaniesReducer,
 } from "@/APIs/reducers/insurance-companies/get-insurance-companies.reducer";
 import { getInsuranceCompaniesAction } from "@/APIs/actions/insurance-companies/get-insurance-companies.action";
+import {
+  getThirdDiscountsInitialState,
+  getThirdDiscountsReducer,
+} from "@/APIs/reducers/third-discounts/get-third-discounts.reducer";
+import { getThirdDiscountsAction } from "@/APIs/actions/third-discounts/get-third-discounts.action";
 
 axios.defaults.baseURL = GENERAL.API_URL;
 
@@ -27,9 +32,16 @@ export const useAPICaller = () => {
   );
   const getInsuranceCompanies = () => getInsuranceCompaniesAction(getInsuranceCompaniesDispatch);
 
+  const [getThirdDiscountsResult, getThirdDiscountsDispatch] = useReducer(
+    getThirdDiscountsReducer,
+    getThirdDiscountsInitialState,
+  );
+  const getThirdDiscounts = () => getThirdDiscountsAction(getThirdDiscountsDispatch);
+
   return {
     getVehicleTypesCaller: [getVehicleTypes, getVehicleTypesResult] as const,
     getInsuranceCompaniesCaller: [getInsuranceCompanies, getInsuranceCompaniesResult] as const,
+    getThirdDiscountsCaller: [getThirdDiscounts, getThirdDiscountsResult] as const,
   };
 };
 
