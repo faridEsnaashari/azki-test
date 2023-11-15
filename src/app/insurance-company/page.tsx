@@ -1,20 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, RadioButton } from "@/common/components/forms";
 import { insuranceCompanyPlaceholder, descriptionText, nextButtonText, returnButtonText, titleText } from "./texts";
 import { Option } from "@/common/components/forms/components/radio-button.types";
 import { ArrowIcon } from "@/common/components/svg-icons";
-
-const insuranceCompaniesMock: Option[] = [
-  { id: 0, text: "car0" },
-  { id: 1, text: "car1" },
-  { id: 2, text: "car2" },
-];
+import useAPICaller from "@/hooks/use-api-caller.hook";
 
 function Page() {
-  const [insuranceCompanies, setInsuranceCompanies] = useState<Option[]>(insuranceCompaniesMock);
+  const [getInsuranceCompanies, result] = useAPICaller().getInsuranceCompaniesCaller;
+
+  const [insuranceCompanies, setInsuranceCompanies] = useState<Option[]>([]);
   const [selectedInsuranceCompany, setSelectedInsuranceCompany] = useState<Option>();
+
+  useEffect(() => getInsuranceCompanies(), []);
+
+  useEffect(() => {
+    if (result.isFetching || !result.data) {
+      return;
+    }
+
+    setInsuranceCompanies(
+      result.data.map((insuranceCompany) => ({ id: insuranceCompany.id, text: insuranceCompany.title })),
+    );
+  }, [result]);
 
   return (
     <div className="flex w-full flex-col items-center xsm:items-start xsm:p-0 sm:pr-10 md:pr-20">
