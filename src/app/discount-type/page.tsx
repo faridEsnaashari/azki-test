@@ -6,6 +6,7 @@ import { buttonText, errorText, text1Placeholder, text2Placeholder } from "./tex
 import { Option } from "@/common/components/forms/components/radio-button.types";
 import useAPICaller from "@/hooks/use-api-caller.hook";
 import { ResultModal } from "./components";
+import withSignup from "@/HOCs/withSignup";
 
 function Page() {
   const [getThirdDiscounts, result] = useAPICaller().getThirdDiscountsCaller;
@@ -77,4 +78,4 @@ function Page() {
   );
 }
 
-export default Page;
+export default withSignup(Page);

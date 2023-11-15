@@ -8,6 +8,7 @@ import { ArrowIcon } from "@/common/components/svg-icons";
 import useAPICaller from "@/hooks/use-api-caller.hook";
 import { VehicleType, VehicleUsage } from "@/common/types/entities.type";
 import { useRouter, useSearchParams } from "next/navigation";
+import withSignup from "@/HOCs/withSignup";
 
 function Page() {
   const [getVehicleTypes, result] = useAPICaller().getVehicleTypesCaller;
@@ -85,7 +86,10 @@ function Page() {
         showError={showError === "carusage"}
       />
       <div className="flex w-full justify-between gap-4">
-        <Button className="relative flex h-10 w-40 min-w-[2rem] items-center rounded-full border border-solid border-[#44c1a9] bg-white text-base font-medium text-[#44c1a9] transition-color hover:bg-[#25b79b] hover:text-white">
+        <Button
+          className="relative flex h-10 w-40 min-w-[2rem] items-center rounded-full border border-solid border-[#44c1a9] bg-white text-base font-medium text-[#44c1a9] transition-color hover:bg-[#25b79b] hover:text-white"
+          onClick={() => router.back()}
+        >
           <ArrowIcon className="absolute right-4 !w-4 rotate-180 xsm:hidden sm:block" />
           <span className="w-full font-bold ">{returnButtonText}</span>
         </Button>
@@ -98,4 +102,4 @@ function Page() {
   );
 }
 
-export default Page;
+export default withSignup(Page);
