@@ -3,6 +3,7 @@
 import { card1Text, card2Text, titleText } from "./texts";
 import { Card } from "./components";
 import { useRouter } from "next/navigation";
+import withSignup from "@/HOCs/withSignup";
 
 function Page() {
   const router = useRouter();
@@ -30,4 +31,4 @@ function Page() {
   );
 }
 
-export default Page;
+export default withSignup(Page);
