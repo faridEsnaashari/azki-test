@@ -5,3 +5,5 @@ export const text1Placeholder = "رصد تخفیف ثاثل";
 export const text2Placeholder = "درصد تخفیف حوادث راننده";
 
 export const buttonText = "استعلام قیمت";
+
+export const errorText = "یکی از مقادیر را انتخاب کنید";

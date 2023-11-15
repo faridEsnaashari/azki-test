@@ -6,3 +6,5 @@ export const carModelPlaceholder = "مدل خودرو";
 
 export const returnButtonText = "بازگشت";
 export const nextButtonText = "مرحله ی بعد";
+
+export const errorText = "یکی از مقادیر را انتخاب کنید";
