@@ -51,8 +51,8 @@ function Page() {
       return;
     }
 
-      localStorage.setItem("vehicleType", selectedCarType.id+"")
-      localStorage.setItem("vehicleUsage", selectedCarUsage.id+"")
+    localStorage.setItem("vehicleType", JSON.stringify(selectedCarType));
+    localStorage.setItem("vehicleUsage", JSON.stringify(selectedCarUsage));
 
     const urlParams = new URLSearchParams(searchParams.toString());
     urlParams.append("vehicle-type", selectedCarType.id + "");

@@ -7,7 +7,6 @@ import { Option } from "@/common/components/forms/components/radio-button.types"
 import { ArrowIcon } from "@/common/components/svg-icons";
 import useAPICaller from "@/hooks/use-api-caller.hook";
 import { useRouter, useSearchParams } from "next/navigation";
-import { url } from "inspector";
 
 function Page() {
   const [getInsuranceCompanies, result] = useAPICaller().getInsuranceCompaniesCaller;
@@ -39,7 +38,7 @@ function Page() {
       return;
     }
 
-    localStorage.setItem("company", selectedInsuranceCompany.id + "");
+    localStorage.setItem("company", JSON.stringify(selectedInsuranceCompany));
 
     const urlParams = new URLSearchParams(searchParams.toString());
     urlParams.append("company", selectedInsuranceCompany.id + "");
