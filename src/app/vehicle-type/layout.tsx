@@ -1,11 +1,10 @@
-"use client"
+"use client";
 
 import { LayoutProps } from "@/common/types/next-components.type";
 import { redirect } from "next/navigation";
 import { descriptionText, titleText } from "./texts";
 
 function Layout({ children }: LayoutProps) {
-
   if (!localStorage.getItem("type")) {
     redirect("/insurance-type");
   }
