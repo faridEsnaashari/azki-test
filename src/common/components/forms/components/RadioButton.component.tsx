@@ -82,7 +82,7 @@ function RadioButton({
         onClick={onClick}
       ></input>
       <div
-        className={`absolute top-12 z-50 max-h-0 w-full flex-col overflow-auto overflow-hidden rounded-b-lg border-0 border-solid border-[#dfdfdf] transition-max-h duration-300 ${
+        className={`absolute top-12 z-50 max-h-0 w-full flex-col overflow-hidden overflow-y-auto rounded-b-lg border-0 border-solid border-[#dfdfdf] transition-max-h duration-300 ${
           openOptions && "!max-h-[20vh] !border"
         }`}
         onMouseOver={onHovered}
