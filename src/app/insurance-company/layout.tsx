@@ -1,13 +1,11 @@
 "use client";
 
 import { LayoutProps } from "@/common/types/next-components.type";
-import { redirect, useSearchParams } from "next/navigation";
+import { redirect } from "next/navigation";
 import { descriptionText, titleText } from "./texts";
 
 function Layout({ children }: LayoutProps) {
-  const searchParams = useSearchParams();
-
-  if (!searchParams.get("vehicle-type") || !searchParams.get("vehicle-usage")) {
+  if (!localStorage.getItem("type") || !localStorage.getItem("vehicleType") || !localStorage.getItem("vehicleUsage")) {
     redirect("/vehicle-type");
   }
 
